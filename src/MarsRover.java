@@ -1,9 +1,11 @@
 import java.util.Objects;
 
 public class MarsRover {
-    private final int x;
-    private final int y;
-    private final char direction;
+    private int x;
+    private int y;
+    private char direction;
+    private String commands;
+
 
     public MarsRover(int x, int y, char direction) {
         this.x = x;
@@ -18,11 +20,12 @@ public class MarsRover {
         MarsRover marsRover = (MarsRover) o;
         return x == marsRover.x &&
                 y == marsRover.y &&
-                direction == marsRover.direction;
+                direction == marsRover.direction &&
+                Objects.equals(commands, marsRover.commands);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y, direction);
+        return Objects.hash(x, y, direction, commands);
     }
 }
