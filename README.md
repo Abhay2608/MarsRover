@@ -10,4 +10,4 @@ Develop an API that translates the commands sent from earth to instructions that
 3.Implement commands that move the rover forward/backward (f,b).\
 4.Implement commands that turn the rover left/right (l,r).\
 5.Implement wrapping from one edge of the grid to another. (planets are spheres after all)\
-6.Implement obstacle detection before each move to a new square. If a given sequence of commands encounters an obstacle, the rover moves up to the last possible point, aborts the sequence and reports the obstacle.\
+6.Implement obstacle detection before each move to a new square. If a given sequence of commands encounters an obstacle, the rover moves up to the last possible point, aborts the sequence and reports the obstacle.
