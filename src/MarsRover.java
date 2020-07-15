@@ -28,4 +28,42 @@ public class MarsRover {
     public int hashCode() {
         return Objects.hash(x, y, direction, commands);
     }
+
+    public String execute(String commands){
+        for(char c : commands.toCharArray()){
+            if(c == 'r')    this.direction = rotateRight();
+            else if(c == 'l')   this.direction = rotateLeft();
+        }
+        StringBuilder currentPosition = new StringBuilder();
+        currentPosition.append(this.x).append(":").append(this.y).append(":").append(this.direction);
+        return currentPosition.toString();
+    }
+
+    public char rotateRight(){
+        switch (this.direction){
+            case 'N': this.direction = 'E';
+                      break;
+            case 'E': this.direction = 'S';
+                      break;
+            case 'S': this.direction = 'W';
+                      break;
+            case 'W': this.direction = 'N';
+                      break;
+        }
+        return this.direction;
+    }
+
+    public char rotateLeft(){
+        switch (this.direction){
+            case 'N': this.direction = 'W';
+                break;
+            case 'W': this.direction = 'S';
+                break;
+            case 'S': this.direction = 'E';
+                break;
+            case 'E': this.direction = 'N';
+                break;
+        }
+        return this.direction;
+    }
 }
