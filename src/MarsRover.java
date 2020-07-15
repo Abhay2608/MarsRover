@@ -73,6 +73,9 @@ public class MarsRover {
             else if(c == 'f'){
                 coordinates = coordinates.moveForward(coordinates,direction);
             }
+            else if(c == 'b'){
+                coordinates = coordinates.moveBackward(coordinates,direction);
+            }
         }
         StringBuilder currentPosition = new StringBuilder();
         currentPosition.append(coordinates.getX()).append(":").append(coordinates.getY()).append(":").append(this.direction.value);

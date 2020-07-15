@@ -58,4 +58,32 @@ class Coordinates {
         }
         return new Coordinates(x,y);
     }
+
+    public Coordinates moveBackward(Coordinates coordinates, MarsRover.Direction direction){
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        if(direction == MarsRover.Direction.NORTH){
+            y = (y + 1) % 5;   //MAX_HEIGHT
+        }
+        else if(direction == MarsRover.Direction.SOUTH){
+            if(y > 0){
+                y = y-1;
+            }
+            else{
+                y = (5-1);
+            }
+        }
+        else if(direction == MarsRover.Direction.EAST){
+            if(x > 0){
+                x = x-1;
+            }
+            else{
+                x = (5 -1);
+            }
+        }
+        else if(direction == MarsRover.Direction.WEST){
+            x = (x + 1) % 5;
+        }
+        return new Coordinates(x,y);
+    }
 }
