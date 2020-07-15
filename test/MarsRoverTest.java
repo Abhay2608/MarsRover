@@ -17,7 +17,7 @@ public class MarsRoverTest {
 
     @Before
     public void beforeRoverTest(){
-        marsRover = new MarsRover(0,0,'N');
+        marsRover = new MarsRover(0,0, MarsRover.Direction.NORTH);
     }
     @Test
     public void testPositive(){
@@ -26,7 +26,7 @@ public class MarsRoverTest {
 
     @Test
     public void createMarsRover(){
-        assertThat(marsRover,is(new MarsRover(0,0,'N')));
+        assertThat(marsRover,is(new MarsRover(0,0, MarsRover.Direction.NORTH)));
     }
 
     @Test
@@ -50,6 +50,4 @@ public class MarsRoverTest {
     public void rotateLeft(String commands,String position){
         assertThat(marsRover.execute(commands), is(position));
     }
-
-    
 }

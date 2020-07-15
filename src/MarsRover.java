@@ -3,11 +3,44 @@ import java.util.Objects;
 public class MarsRover {
     private int x;
     private int y;
-    private char direction;
+    private Direction direction;
     private String commands;
 
+    enum Direction{
+        NORTH('N','W','E'),
+        SOUTH('S','E','W'),
+        EAST('E','N','S'),
+        WEST('W','S','N');
 
-    public MarsRover(int x, int y, char direction) {
+        private final char value;
+        private final char left;
+        private final char right;
+
+        Direction(char value, char left, char right) {
+            this.value = value;
+            this.left = left;
+            this.right = right;
+        }
+
+        public Direction right(){
+            return matchDirection(right);
+        }
+
+        public Direction left(){
+            return matchDirection(left);
+        }
+
+        private Direction matchDirection(char value){
+            for(Direction d : values()){
+                if(d.value == value){
+                    return d;
+                }
+            }
+            return null;
+        }
+    }
+
+    public MarsRover(int x, int y, Direction direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -31,39 +64,15 @@ public class MarsRover {
 
     public String execute(String commands){
         for(char c : commands.toCharArray()){
-            if(c == 'r')    this.direction = rotateRight();
-            else if(c == 'l')   this.direction = rotateLeft();
+            if(c == 'r') {
+                direction = direction.right();
+            }
+            else if(c == 'l') {
+                direction = direction.left();
+            }
         }
         StringBuilder currentPosition = new StringBuilder();
-        currentPosition.append(this.x).append(":").append(this.y).append(":").append(this.direction);
+        currentPosition.append(this.x).append(":").append(this.y).append(":").append(this.direction.value);
         return currentPosition.toString();
-    }
-
-    public char rotateRight(){
-        switch (this.direction){
-            case 'N': this.direction = 'E';
-                      break;
-            case 'E': this.direction = 'S';
-                      break;
-            case 'S': this.direction = 'W';
-                      break;
-            case 'W': this.direction = 'N';
-                      break;
-        }
-        return this.direction;
-    }
-
-    public char rotateLeft(){
-        switch (this.direction){
-            case 'N': this.direction = 'W';
-                break;
-            case 'W': this.direction = 'S';
-                break;
-            case 'S': this.direction = 'E';
-                break;
-            case 'E': this.direction = 'N';
-                break;
-        }
-        return this.direction;
     }
 }
