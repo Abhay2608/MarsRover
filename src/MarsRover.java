@@ -1,8 +1,10 @@
+import com.sun.org.apache.xml.internal.security.utils.XalanXPathAPI;
+import com.sun.scenario.effect.impl.state.RenderState;
+
 import java.util.Objects;
 
 public class MarsRover {
-    private int x;
-    private int y;
+    private Coordinates coordinates;
     private Direction direction;
     private String commands;
 
@@ -40,9 +42,8 @@ public class MarsRover {
         }
     }
 
-    public MarsRover(int x, int y, Direction direction) {
-        this.x = x;
-        this.y = y;
+    public MarsRover(Coordinates coordinates, Direction direction) {
+        this.coordinates = coordinates;
         this.direction = direction;
     }
 
@@ -51,15 +52,14 @@ public class MarsRover {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MarsRover marsRover = (MarsRover) o;
-        return x == marsRover.x &&
-                y == marsRover.y &&
+        return Objects.equals(coordinates, marsRover.coordinates) &&
                 direction == marsRover.direction &&
                 Objects.equals(commands, marsRover.commands);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y, direction, commands);
+        return Objects.hash(coordinates, direction, commands);
     }
 
     public String execute(String commands){
@@ -70,9 +70,12 @@ public class MarsRover {
             else if(c == 'l') {
                 direction = direction.left();
             }
+            else if(c == 'f'){
+                coordinates = coordinates.moveForward(coordinates,direction);
+            }
         }
         StringBuilder currentPosition = new StringBuilder();
-        currentPosition.append(this.x).append(":").append(this.y).append(":").append(this.direction.value);
+        currentPosition.append(coordinates.getX()).append(":").append(coordinates.getY()).append(":").append(this.direction.value);
         return currentPosition.toString();
     }
 }

@@ -17,7 +17,7 @@ public class MarsRoverTest {
 
     @Before
     public void beforeRoverTest(){
-        marsRover = new MarsRover(0,0, MarsRover.Direction.NORTH);
+        marsRover = new MarsRover(new Coordinates(0,0), MarsRover.Direction.NORTH);
     }
     @Test
     public void testPositive(){
@@ -26,7 +26,7 @@ public class MarsRoverTest {
 
     @Test
     public void createMarsRover(){
-        assertThat(marsRover,is(new MarsRover(0,0, MarsRover.Direction.NORTH)));
+        assertThat(marsRover,is(new MarsRover(new Coordinates(0,0), MarsRover.Direction.NORTH)));
     }
 
     @Test
@@ -48,6 +48,54 @@ public class MarsRoverTest {
             "llll, 0:0:N"
     })
     public void rotateLeft(String commands,String position){
+        assertThat(marsRover.execute(commands), is(position));
+    }
+
+    @Test
+    @Parameters({
+            "f, 0:4:N",
+            "ff, 0:3:N",
+            "fff, 0:2:N",
+            "ffff, 0:1:N"
+    })
+    public void facingNorthMoveForward(String commands,String position){
+        assertThat(marsRover.execute(commands), is(position));
+    }
+
+    @Test
+    @Parameters({
+            "f, 0:1:S",
+            "ff, 0:2:S",
+            "fff, 0:3:S",
+            "ffff, 0:4:S"
+    })
+    public void facingSouthMoveForward(String commands,String position){
+        marsRover = new MarsRover(new Coordinates(0,0), MarsRover.Direction.SOUTH);
+        assertThat(marsRover.execute(commands), is(position));
+    }
+
+
+    @Test
+    @Parameters({
+            "f, 1:0:E",
+            "ff, 2:0:E",
+            "fff, 3:0:E",
+            "ffff, 4:0:E"
+    })
+    public void facingEastMoveForward(String commands,String position){
+        marsRover = new MarsRover(new Coordinates(0,0), MarsRover.Direction.EAST);
+        assertThat(marsRover.execute(commands), is(position));
+    }
+
+    @Test
+    @Parameters({
+            "f, 4:0:W",
+            "ff, 3:0:W",
+            "fff, 2:0:W",
+            "ffff, 1:0:W"
+    })
+    public void facingWestMoveForward(String commands,String position){
+        marsRover = new MarsRover(new Coordinates(0,0), MarsRover.Direction.WEST);
         assertThat(marsRover.execute(commands), is(position));
     }
 }
