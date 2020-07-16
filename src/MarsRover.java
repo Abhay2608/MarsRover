@@ -82,7 +82,6 @@ public class MarsRover {
                     currentPosition.append("c").append(":").append(oldCoordinates.getX()).append(":").append(oldCoordinates.getY()).append(":").append(direction.value);
                     currentPosition.append(" - ").append("o").append(":").append(coordinates.getX()).append(":").append(coordinates.getY()).append(":").append(direction.value);
                     return currentPosition.toString();
-                    //c:0:2:E - o:1:2:E
                 }
             }
             else if(c == 'b'){
@@ -93,7 +92,6 @@ public class MarsRover {
                     currentPosition.append("c").append(":").append(oldCoordinates.getX()).append(":").append(oldCoordinates.getY()).append(":").append(direction.value);
                     currentPosition.append(" - ").append("o").append(":").append(coordinates.getX()).append(":").append(coordinates.getY()).append(":").append(direction.value);
                     return currentPosition.toString();
-                    //c:0:2:E - o:1:2:E
                 }
             }
         }
