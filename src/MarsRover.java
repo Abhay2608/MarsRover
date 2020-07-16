@@ -94,6 +94,9 @@ public class MarsRover {
                     return currentPosition.toString();
                 }
             }
+            else{
+                return "Illegal Command";
+            }
         }
         StringBuilder currentPosition = new StringBuilder();
         currentPosition.append(coordinates.getX()).append(":").append(coordinates.getY()).append(":").append(this.direction.value);

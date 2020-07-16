@@ -192,7 +192,7 @@ public class MarsRoverTest {
 
     @Test
     @Parameters({
-            "rrffflbbbrf, c:1:5:N - o:1:4:N",
+            "rrfffrbbbrf, c:1:5:N - o:1:4:N",
             "ffffffrf, c:2:6:E - o:3:6:E"
     })
     public void increaseObstacles(String commands,String result){
@@ -200,5 +200,15 @@ public class MarsRoverTest {
         grid.addObstacles(new Coordinates(1,4));
         grid.addObstacles(new Coordinates(3,6));
         marsRover = new MarsRover(new Coordinates(2,2), MarsRover.Direction.NORTH,grid);
+        assertThat(marsRover.execute(commands),is(result));
+    }
+
+    @Test
+    @Parameters({
+            "xx, Illegal Command"
+    })
+    public void checkExceptionOnIllegalCommand(String commands,String result){
+        marsRover = new MarsRover(new Coordinates(0,0), MarsRover.Direction.NORTH,grid);
+        assertThat(marsRover.execute(commands),is(result));
     }
 }
