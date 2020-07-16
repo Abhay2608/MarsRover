@@ -1,12 +1,14 @@
 import com.sun.org.apache.xml.internal.security.utils.XalanXPathAPI;
 import com.sun.scenario.effect.impl.state.RenderState;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MarsRover {
     private Coordinates coordinates;
     private Direction direction;
     private String commands;
+    private Grid grid;
 
     enum Direction{
         NORTH('N','W','E'),
@@ -42,9 +44,10 @@ public class MarsRover {
         }
     }
 
-    public MarsRover(Coordinates coordinates, Direction direction) {
+    public MarsRover(Coordinates coordinates, Direction direction, Grid grid) {
         this.coordinates = coordinates;
         this.direction = direction;
+        this.grid = grid;
     }
 
     @Override
@@ -54,12 +57,13 @@ public class MarsRover {
         MarsRover marsRover = (MarsRover) o;
         return Objects.equals(coordinates, marsRover.coordinates) &&
                 direction == marsRover.direction &&
-                Objects.equals(commands, marsRover.commands);
+                Objects.equals(commands, marsRover.commands) &&
+                Objects.equals(grid, marsRover.grid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinates, direction, commands);
+        return Objects.hash(coordinates, direction, commands, grid);
     }
 
     public String execute(String commands){
@@ -71,14 +75,37 @@ public class MarsRover {
                 direction = direction.left();
             }
             else if(c == 'f'){
-                coordinates = coordinates.moveForward(coordinates,direction);
+                Coordinates oldCoordinates = new Coordinates(coordinates.getX(), coordinates.getY());
+                coordinates = coordinates.moveForward(coordinates,direction,grid.getMAX_HEIGHT(),grid.getMAX_WIDTH());
+                if(isObstacle(coordinates,grid.getObstacles())){
+                    StringBuilder currentPosition = new StringBuilder();
+                    currentPosition.append("c").append(":").append(oldCoordinates.getX()).append(":").append(oldCoordinates.getY()).append(":").append(direction.value);
+                    currentPosition.append(" - ").append("o").append(":").append(coordinates.getX()).append(":").append(coordinates.getY()).append(":").append(direction.value);
+                    return currentPosition.toString();
+                    //c:0:2:E - o:1:2:E
+                }
             }
             else if(c == 'b'){
-                coordinates = coordinates.moveBackward(coordinates,direction);
+                Coordinates oldCoordinates = new Coordinates(coordinates.getX(), coordinates.getY());
+                coordinates = coordinates.moveBackward(coordinates,direction,grid.getMAX_HEIGHT(),grid.getMAX_WIDTH());
+                if(isObstacle(coordinates,grid.getObstacles())){
+                    StringBuilder currentPosition = new StringBuilder();
+                    currentPosition.append("c").append(":").append(oldCoordinates.getX()).append(":").append(oldCoordinates.getY()).append(":").append(direction.value);
+                    currentPosition.append(" - ").append("o").append(":").append(coordinates.getX()).append(":").append(coordinates.getY()).append(":").append(direction.value);
+                    return currentPosition.toString();
+                    //c:0:2:E - o:1:2:E
+                }
             }
         }
         StringBuilder currentPosition = new StringBuilder();
         currentPosition.append(coordinates.getX()).append(":").append(coordinates.getY()).append(":").append(this.direction.value);
         return currentPosition.toString();
+    }
+
+    public boolean isObstacle(Coordinates coordinates, List<Coordinates> obstacles){
+        for(Coordinates obstacle : obstacles){
+            if(obstacle.getX() == coordinates.getX() && obstacle.getY() == coordinates.getY())  return true;
+        }
+        return false;
     }
 }

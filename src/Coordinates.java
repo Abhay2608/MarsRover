@@ -3,7 +3,6 @@ import java.util.Objects;
 class Coordinates {
     private final int x;
     private final int y;
-
     public Coordinates(int x, int y) {
         this.x = x;
         this.y = y;
@@ -31,7 +30,7 @@ class Coordinates {
         return Objects.hash(x, y);
     }
 
-    public Coordinates moveForward(Coordinates coordinates, MarsRover.Direction direction){
+    public Coordinates moveForward(Coordinates coordinates, MarsRover.Direction direction,int MAX_HEIGHT,int MAX_WIDTH){
         int x = coordinates.getX();
         int y = coordinates.getY();
         if(direction == MarsRover.Direction.NORTH){
@@ -39,38 +38,38 @@ class Coordinates {
                 y = y-1;
             }
             else{
-                y = (5-1);
+                y = (MAX_HEIGHT-1);
             }
         }
         else if(direction == MarsRover.Direction.SOUTH){
-            y = (y + 1) % 5;   //MAX_HEIGHT
+            y = (y + 1) % MAX_HEIGHT;   //MAX_HEIGHT
         }
         else if(direction == MarsRover.Direction.EAST){
-            x = (x + 1) % 5;   //MAX_WIDTH
+            x = (x + 1) % MAX_WIDTH;   //MAX_WIDTH
         }
         else if(direction == MarsRover.Direction.WEST){
             if(x > 0){
                 x = x-1;
             }
             else{
-                x = (5 -1);
+                x = (MAX_WIDTH -1);
             }
         }
         return new Coordinates(x,y);
     }
 
-    public Coordinates moveBackward(Coordinates coordinates, MarsRover.Direction direction){
+    public Coordinates moveBackward(Coordinates coordinates, MarsRover.Direction direction,int MAX_HEIGHT,int MAX_WIDTH){
         int x = coordinates.getX();
         int y = coordinates.getY();
         if(direction == MarsRover.Direction.NORTH){
-            y = (y + 1) % 5;   //MAX_HEIGHT
+            y = (y + 1) % MAX_HEIGHT;   //MAX_HEIGHT
         }
         else if(direction == MarsRover.Direction.SOUTH){
             if(y > 0){
                 y = y-1;
             }
             else{
-                y = (5-1);
+                y = (MAX_HEIGHT-1);
             }
         }
         else if(direction == MarsRover.Direction.EAST){
@@ -78,11 +77,11 @@ class Coordinates {
                 x = x-1;
             }
             else{
-                x = (5 -1);
+                x = (MAX_WIDTH -1);
             }
         }
         else if(direction == MarsRover.Direction.WEST){
-            x = (x + 1) % 5;
+            x = (x + 1) % MAX_WIDTH;
         }
         return new Coordinates(x,y);
     }
