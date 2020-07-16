@@ -211,4 +211,20 @@ public class MarsRoverTest {
         marsRover = new MarsRover(new Coordinates(0,0), MarsRover.Direction.NORTH,grid);
         assertThat(marsRover.execute(commands),is(result));
     }
+
+    @Test
+    public void coordinatesTestPositiveValues(){
+        grid = new Grid(5,5,obstacles);
+        marsRover = new MarsRover(new Coordinates(9,8), MarsRover.Direction.NORTH,grid);
+        assertThat(marsRover,is(new MarsRover(new Coordinates(4,3), MarsRover.Direction.NORTH,grid)));
+    }
+
+    @Test
+    public void coordinatesTestNegativeValues(){
+        grid = new Grid(5,5,obstacles);
+        marsRover = new MarsRover(new Coordinates(-9,-8), MarsRover.Direction.NORTH,grid);
+        assertThat(marsRover,is(new MarsRover(new Coordinates(4,3), MarsRover.Direction.NORTH,grid)));
+    }
+
+
 }

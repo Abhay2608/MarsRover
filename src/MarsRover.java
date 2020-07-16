@@ -48,6 +48,19 @@ public class MarsRover {
         this.coordinates = coordinates;
         this.direction = direction;
         this.grid = grid;
+        coordinatesCorrection(this.coordinates,this.grid);
+    }
+
+    public void coordinatesCorrection(Coordinates coordinates,Grid grid){
+        int Xmultiplier = 1,Ymultiplier = 1;
+        if(coordinates.getX() < 0){
+            Xmultiplier = -1;
+        }
+        if(coordinates.getY() < 0){
+            Ymultiplier = -1;
+        }
+        Coordinates newCoordinates = new Coordinates(coordinates.getX()*Xmultiplier % grid.getMAX_WIDTH(), coordinates.getY()*Ymultiplier % grid.getMAX_HEIGHT());
+        this.coordinates = newCoordinates;
     }
 
     @Override
